@@ -43,6 +43,10 @@ customPlugins.add(function(use)
         use {
                 "terrortylor/nvim-comment"
         }
+
+        use {
+                "tpope/vim-commentary"
+        }
 end)
 
 -- NOTE: we heavily suggest using Packer's lazy loading (with the 'event','cmd' fields)
@@ -52,7 +56,10 @@ end)
 -- Tab preferences
 vim.cmd("set tabstop=8")
 vim.cmd("set shiftwidth=8")
-vim.cmd("set expandtab")
+vim.cmd("set expandtab!")
+
+-- Expand the tab width to 4 spaces if Python is detected
+vim.cmd("autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab")
 
 -- Commenting
 require("nvim_commment").setup()
