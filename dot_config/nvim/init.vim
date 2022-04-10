@@ -7,42 +7,43 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'joshdick/onedark.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'autozimu/LanguageClient-neovim', {
-                        \ 'branch': 'next',
-                        \ 'do': 'bash install.sh',
-                        \ }
-Plug 'liuchengxu/vista.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neovim/nvim-lspconfig'
-Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-Plug 'liuchengxu/vim-clap'
-Plug 'rakr/vim-two-firewatch'
-Plug 'sonph/onehalf'
-Plug 'arcticicestudio/nord-vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'preservim/nerdtree'
+Plug 'EdenEast/nightfox.nvim'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'sainnhe/sonokai'
-Plug 'romainl/Apprentice'
-Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh',}
 Plug 'camspiers/animate.vim'
 Plug 'camspiers/lens.vim'
 Plug 'danilo-augusto/vim-afterglow'
-Plug 'lervag/vimtex'
-Plug 'vimsence/vimsence'
-Plug 'phanviet/vim-monokai-pro'
-Plug 'arcticicestudio/nord-vim'
 Plug 'github/copilot.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'joshdick/onedark.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'lervag/vimtex'
+Plug 'liuchengxu/vim-clap'
+Plug 'liuchengxu/vista.vim'
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+Plug 'morhetz/gruvbox'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'phanviet/vim-monokai-pro'
+Plug 'preservim/nerdtree'
+Plug 'rakr/vim-two-firewatch'
+Plug 'romainl/Apprentice'
+Plug 'ryanoasis/vim-devicons'
+Plug 'sainnhe/sonokai'
+Plug 'sonph/onehalf'
 Plug 'tikhomirov/vim-glsl'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vimsence/vimsence'
 
 call plug#end()
 
@@ -51,25 +52,25 @@ syntax on
 
 set termguicolors
 
-" colorscheme onedark
-" colorscheme afterglow
-" colorscheme monokai_pro
-colorscheme nord
+" Schemes
+colorscheme gruvbox
+set background=dark
 
-let g:lightline = {'colorscheme': 'afterglow'}
+let g:airline_theme='gruvbox'
+
+" Kill background color
+hi Normal guibg=NONE ctermbg=NONE
+
+" More on vim-airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:Powerline_symbols = 'fancy'
 
 " Limelight
 let g:limelight_conceal_ctermfg = 240
 
 " Doxygen
 let g:load_doxygen_syntax=1
-
-" More on vim-airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-let g:airline_left_sep=''
-let g:airline_right_sep=''
 
 highlight CocFloating ctermbg=240
 
@@ -90,6 +91,10 @@ source ~/.keybinds.vim
 " Limelight
 :imap <C-l> <ESC> :Limelight!! <CR>
 :map <C-l> :Limelight!! <CR>
+
+" Vista
+:imap <C-q> <ESC> :Vista!! <CR>
+:map <C-q> :Vista!! <CR>
 
 " Terminal Function
 let g:term_buf = 0
@@ -132,3 +137,8 @@ set mouse=a
 
 au BufRead,BufNewFile *.vert set filetype=glsl
 au BufRead,BufNewFile *.frag set filetype=glsl
+
+" Todotree plugin
+source ~/.config/nvim/todotree.vim
+:imap <C-e> <ESC> :call TodoTree() <CR>
+:map <C-e> :call TodoTree() <CR>
