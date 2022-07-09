@@ -1,4 +1,3 @@
-" auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
@@ -44,6 +43,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vimsence/vimsence'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
 
 call plug#end()
 
@@ -53,10 +54,11 @@ syntax on
 set termguicolors
 
 " Schemes
-colorscheme gruvbox
-set background=dark
+let g:catppuccin_flavour = "frappe"
+colorscheme catppuccin
+" set background=light
 
-let g:airline_theme='gruvbox'
+let g:airline_theme='onedark'
 
 " Kill background color
 hi Normal guibg=NONE ctermbg=NONE
