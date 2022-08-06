@@ -1,0 +1,19 @@
+# Closing the current window
+ctrl + q
+	bspc node -c
+
+# Switching desktops
+alt + {Left, Right, Up, Down}
+	python ./bspwm_grid.py {left,right,up,down}
+
+# Launchers
+super + Return
+	kitty
+
+super + c
+	google-chrome-stable
+
+# Rofi
+alt + @space
+	rofi -show combi -combi-modi "window,run,drun" -modes combi
+
