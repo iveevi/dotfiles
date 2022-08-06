@@ -110,4 +110,9 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Prompt
 eval "$(starship init zsh)"
-export STARSHIP_CONFIG=~/downloads/bracketed-segments.toml
+
+# Starship theme
+export STARSHIP_CONFIG=~/downloads/pastel-powerline.toml
+
+# Startup please
+please

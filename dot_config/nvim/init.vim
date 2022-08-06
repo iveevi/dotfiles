@@ -8,21 +8,21 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'EdenEast/nightfox.nvim'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'arcticicestudio/nord-vim'
+Plug 'akinsho/toggleterm.nvim', {'tag' : 'v2.*'}
 Plug 'arcticicestudio/nord-vim'
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh',}
 Plug 'camspiers/animate.vim'
 Plug 'camspiers/lens.vim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'danilo-augusto/vim-afterglow'
+Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
 Plug 'github/copilot.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'joshdick/onedark.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'lervag/vimtex'
-Plug 'liuchengxu/vim-clap'
 Plug 'liuchengxu/vista.vim'
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 Plug 'morhetz/gruvbox'
@@ -30,6 +30,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'phanviet/vim-monokai-pro'
 Plug 'preservim/nerdtree'
 Plug 'rakr/vim-two-firewatch'
@@ -41,10 +43,7 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'vimsence/vimsence'
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
 
 call plug#end()
 
@@ -54,11 +53,10 @@ syntax on
 set termguicolors
 
 " Schemes
-let g:catppuccin_flavour = "frappe"
-colorscheme catppuccin
-" set background=light
+colorscheme gruvbox
+let g:gruvbox_contrast='soft'
 
-let g:airline_theme='onedark'
+let g:airline_theme='gruvbox'
 
 " Kill background color
 hi Normal guibg=NONE ctermbg=NONE
@@ -83,8 +81,8 @@ set tags=tags
 source ~/.keybinds.vim
 
 " NERDTree
-:imap <C-f> <ESC> :Telescope find_files <CR>
-:map <C-f> :Telescope find_files <CR>
+:imap <C-f> <ESC> :NERDTreeToggle<CR>
+:map <C-f> :NERDTreeToggle<CR>
 
 " Goyo
 :imap <C-g> <ESC> :Goyo <CR>
@@ -97,35 +95,6 @@ source ~/.keybinds.vim
 " Vista
 :imap <C-q> <ESC> :Vista!! <CR>
 :map <C-q> :Vista!! <CR>
-
-" Terminal Function
-let g:term_buf = 0
-let g:term_win = 0
-
-function! TermToggle(height)
-    if win_gotoid(g:term_win)
-        hide
-    else
-        botright new
-        exec "resize " . a:height
-        try
-            exec "buffer " . g:term_buf
-        catch
-            call termopen($SHELL, {"detach": 0})
-            let g:term_buf = bufnr("")
-            set nonumber
-            set norelativenumber
-            set signcolumn=no
-        endtry
-        startinsert!
-        let g:term_win = win_getid()
-    endif
-endfunction
-
-" Toggle terminal on/off (neovim)
-nnoremap <C-t> :call TermToggle(18)<CR>
-inoremap <C-t> <Esc>:call TermToggle(18)<CR>
-tnoremap <C-t> <C-\><C-n>:call TermToggle(18)<CR>
 
 " Terminal go back to normal mode
 tnoremap <Esc> <C-\><C-n>
@@ -144,3 +113,44 @@ au BufRead,BufNewFile *.frag set filetype=glsl
 source ~/.config/nvim/todotree.vim
 :imap <C-e> <ESC> :call TodoTree() <CR>
 :map <C-e> :call TodoTree() <CR>
+
+" Terminal
+lua << EOF
+require("toggleterm").setup {
+	float_opts = {
+		border = 'curved',
+		width = 100,
+		height = 50,
+	}
+}
+EOF
+
+tnoremap <silent> <A-t> <C-\><C-n> :ToggleTerm direction=float<CR>
+nnoremap <silent> <A-t> :ToggleTerm direction=float<CR>
+inoremap <silent> <A-t> <ESC> :ToggleTerm direction=float<CR>
+
+" Highlighting notes
+syn keyword   cTodo   contained    TODO FIXME NOTE
+
+" Color of line numbers
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+set number
+
+" Copilot settings
+" imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+" let g:copilot_no_tab_map = v:true
+
+" Comment color
+highlight Comment guifg=Gray
+
+" Coc
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+" Syntax highlighting
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+	highlight = {
+		enable = true,
+	},
+}
+EOF
