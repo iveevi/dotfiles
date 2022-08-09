@@ -15,6 +15,7 @@ Plug 'camspiers/animate.vim'
 Plug 'camspiers/lens.vim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'danilo-augusto/vim-afterglow'
+Plug 'dcampos/nvim-snippy'
 Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
 Plug 'github/copilot.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
@@ -31,7 +32,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'phanviet/vim-monokai-pro'
 Plug 'preservim/nerdtree'
 Plug 'rakr/vim-two-firewatch'
@@ -44,6 +44,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vimsence/vimsence'
+
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
 
 call plug#end()
 
@@ -129,16 +133,13 @@ tnoremap <silent> <A-t> <C-\><C-n> :ToggleTerm direction=float<CR>
 nnoremap <silent> <A-t> :ToggleTerm direction=float<CR>
 inoremap <silent> <A-t> <ESC> :ToggleTerm direction=float<CR>
 
-" Highlighting notes
-syn keyword   cTodo   contained    TODO FIXME NOTE
-
 " Color of line numbers
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 set number
 
 " Copilot settings
-" imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-" let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-D> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
 
 " Comment color
 highlight Comment guifg=Gray
@@ -154,3 +155,10 @@ require'nvim-treesitter.configs'.setup {
 	},
 }
 EOF
+
+" +bindings
+inoremap <C-BS> <C-o>db
+inoremap <C-Del> <C-o>dw
+
+" Highlighting notes
+syn keyword   cTodo   contained    TODO FIXME NOTE
