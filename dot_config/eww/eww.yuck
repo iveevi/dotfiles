@@ -1,0 +1,41 @@
+(defwidget image_button [label icon_path ?action]
+	(button
+		:onclick "${action}"
+		(box :orientation "v"
+			(label :text "${label}")
+			(image
+				:path "/home/venki/.config/eww/icons/${icon_path}"
+				:image-width 50
+			)
+		)
+	)
+)
+
+(defwindow sysmenu
+	:monitor 0
+	:geometry (geometry
+		:x "10px" :y "30px"
+		:width "20%" :height "100px"
+		:anchor "center"
+	)
+
+	:stacking "fg"
+	:reserve (struts :distance "40px" :side "top")
+	:windowtype "dock"
+	:wm-ignore false
+	
+	(box
+		(image_button :label "Lock" :icon_path "system-lock-screen-symbolic.svg")
+		(image_button :label "Logout"
+			:icon_path "system-log-out-symbolic.svg"
+			:action "eww close sysmenu && pkill -u venki"
+		)
+		(image_button
+			:label "Suspend" :icon_path "system-suspend-symbolic.svg"
+			:action "eww close sysmenu"
+		)
+		(image_button :label "Hibernate" :icon_path "system-hibernate-symbolic.svg")
+		(image_button :label "Restart" :icon_path "system-restart-symbolic.svg")
+		(image_button :label "Suspend" :icon_path "system-suspend-symbolic.svg")
+	)
+)

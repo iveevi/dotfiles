@@ -2,9 +2,55 @@
 ctrl + q
 	bspc node -c
 
+# Audio
+F8
+	amixer -D pulse sset Master toggle
+
+F9
+	amixer -D pulse sset Master 5%-
+
+F10
+	amixer -D pulse sset Master 5%+
+
+F2
+	playerctl previous
+
+F3
+	playerctl next
+
+F5
+	playerctl play-pause
+
+# Brightness
+F11
+	xbacklight -dec 10
+
+F12
+	xbacklight -inc 10
+
+# Tiling and floating windows
+super + f
+	if [ -z "$(bspc query -N -n focused.floating)" ]; then \
+	   bspc node -f -t floating; \
+	else \
+	   bspc node -f -t tiled; \
+	fi
+
+# Move current (floating) window with mouse
+ctrl + {Left, Right, Up, Down}
+	bspc node -v {-20 0, 20 0, 0 -20, 0 20}
+
+# Resize current (floating) window with mouse
+ctrl + shift + {Left, Right, Up, Down}
+	bspc node -z {left -20 0, left 20 0, top 0 -20, top 0 20}
+
 # Switching desktops
 alt + {Left, Right, Up, Down}
-	python ./bspwm_grid.py {left,right,up,down}
+	python ~/.config/sxhkd/bspwm_grid.py {left,right,up,down}
+
+# Alt tabbing
+alt + Tab
+	bash ~/.config/rofi/window-switcher/window-switcher.sh
 
 # Launchers
 super + Return
@@ -15,5 +61,8 @@ super + c
 
 # Rofi
 alt + @space
-	rofi -show combi -combi-modi "window,run,drun" -modes combi
+	rofi -show combi -combi-modi "window,drun" -modes combi
 
+# Lock screen
+alt + shift + x
+	betterlockscreen --lock blur
