@@ -16,7 +16,7 @@ assert sys.argv[1] in diff
 
 d = diff[sys.argv[1]]
 current = os.popen('bspc query -D -d --names').read().split('\n')
-all = os.popen('bspc query -D --names').read().split('\n')
+all = os.popen('bspc query -D -m --names').read().split('\n')
 current = current[0]
 all = all[:-1]
 grid_size = int(math.sqrt(len(all)))
