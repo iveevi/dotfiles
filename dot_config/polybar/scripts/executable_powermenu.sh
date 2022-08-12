@@ -5,38 +5,41 @@
 ## Github  : @adi1090x
 ## Twitter : @adi1090x
 
-dir="~/.config/polybar/scripts/rofi"
+theme="~/.config/rofi/window-switcher/theme.rasi"
 uptime=$(uptime -p | sed -e 's/up //g')
 
 rofi_command="rofi"
 
 # Options
-shutdown=" Shutdown"
-reboot=" Restart"
-lock=" Lock"
-suspend=" Sleep"
-logout=" Logout"
+shutdown="Shutdown\x00icon\x1fsystem-shutdown"
+reboot="Restart\x00icon\x1fsystem-restart"
+lock="Lock\x00icon\x1fsystem-lock-screen"
+suspend="Sleep\x00icon\x1fsystem-suspend"
+logout="Logout\x00icon\x1fsystem-log-out"
 
 # Confirmation
 confirm_exit() {
 	rofi -dmenu\
 		-i\
 		-no-fixed-num-lines\
-		-p "Are You Sure? : "\
-		-theme $dir/confirm.rasi
+		-p "Are You Sure? : "
 }
 
 # Message
 msg() {
-	rofi -theme "$dir/message.rasi" -e "Available Options  -  yes / y / no / n"
+	rofi -e "Available Options  -  yes / y / no / n"
 }
 
 # Variable passed to rofi
 options="$lock\n$suspend\n$logout\n$reboot\n$shutdown"
 
-chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
+chosen="$(echo -e "$options" | $rofi_command \
+	-p "Uptime: $uptime" -dmenu -selected-row 0 \
+	-theme $theme -theme-str "window {width: 35%; height: 11%;} \
+	element-icon {size: 50px;}")"
+echo "Chosen: $chosen"
 case $chosen in
-    $shutdown)
+    "Shutdown")
 		ans=$(confirm_exit &)
 		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
 			systemctl poweroff
@@ -46,7 +49,7 @@ case $chosen in
 			msg
         fi
         ;;
-    $reboot)
+    "Restart")
 		ans=$(confirm_exit &)
 		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
 			systemctl reboot
@@ -56,14 +59,14 @@ case $chosen in
 			msg
         fi
         ;;
-    $lock)
+    "Lock")
 		if [[ -f /usr/bin/betterlockscreen ]]; then
 			betterlockscreen --lock blur
 		elif [[ -f /usr/bin/i3lock ]]; then
 			i3lock
 		fi
         ;;
-    $suspend)
+    "Sleep")
 		ans=$(confirm_exit &)
 		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
 			mpc -q pause
@@ -75,7 +78,7 @@ case $chosen in
 			msg
         fi
         ;;
-    $logout)
+    "Logout")
 		ans=$(confirm_exit &)
 		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
 			if [[ "$DESKTOP_SESSION" == "Openbox" ]]; then
