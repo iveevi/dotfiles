@@ -31,26 +31,45 @@ F12
 # Tiling and floating windows
 super + f
 	if [ -z "$(bspc query -N -n focused.floating)" ]; then \
-	   bspc node -f -t floating; \
+		bspc node -f -t floating; \
 	else \
-	   bspc node -f -t tiled; \
+		bspc node -f -t tiled; \
 	fi
 
-# Move current (floating) window with mouse
+# Toggle monocle
+super + t
+	bspc desktop -l next
+
+# Move current (floating) window
 ctrl + {Left, Right, Up, Down}
 	bspc node -v {-20 0, 20 0, 0 -20, 0 20}
 
-# Resize current (floating) window with mouse
+# Resize current (floating) window
 ctrl + shift + {Left, Right, Up, Down}
 	bspc node -z {left -20 0, left 20 0, top 0 -20, top 0 20}
+
+# With mouse
+super + shift + m
+	python ~/.config/sxhkd/bspwm_mouse.py move
+
+super + shift + r
+	python ~/.config/sxhkd/bspwm_mouse.py resize
 
 # Switching desktops
 alt + {Left, Right, Up, Down}
 	python ~/.config/sxhkd/bspwm_grid.py {left,right,up,down}
 
+# Move current node to another desktop (numbers)
+super + shift + {1,2,3,4,5,6,7,8,9}
+	bspc node -d {1,2,3,4,5,6,7,8,9} -f
+
 # Alt tabbing
 alt + Tab
-	bash ~/.config/rofi/window-switcher/window-switcher.sh
+	bash ~/.config/rofi/window-switcher/window_switcher.sh
+
+# Show desktop (toggle)
+super + d
+	bash ~/.config/sxhkd/show_desktop.sh
 
 # Launchers
 super + Return
@@ -61,8 +80,8 @@ super + c
 
 # Rofi
 alt + @space
-	rofi -show combi -combi-modi "window,drun" -modes combi
+	rofi -theme ~/.config/rofi/themes/app-launcher.rasi -show drun
 
 # Lock screen
 alt + shift + x
-	betterlockscreen --lock blur
+	betterlockscreen --lock

@@ -1,4 +1,4 @@
-configuration {
+/* configuration {
     font: "FantasqueSansMono Nerd Font 13";
     width: 30;
     line-margin: 10;
@@ -11,7 +11,7 @@ configuration {
     display-window: "  ";
     display-combi:  "  ";
     show-icons:     true;
-}
+} */
 
 
-@theme "~/.config/rofi/nord.rasi"
+@theme "~/.config/rofi/themes/app-launcher.rasi"
