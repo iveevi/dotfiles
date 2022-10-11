@@ -17,8 +17,8 @@ Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'dcampos/nvim-snippy'
 Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
+Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'github/copilot.vim'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'joshdick/onedark.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/goyo.vim'
@@ -44,10 +44,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vimsence/vimsence'
-
+Plug 'mangeshrex/everblush.vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
+Plug 'xuhdev/vim-latex-live-preview'
 
 call plug#end()
 
@@ -56,16 +57,42 @@ syntax on
 
 set termguicolors
 
+" Random
+let g:snipMate = { 'snippet_version' : 1 }
+
 " Schemes
+let g:catppuccin_flavor = "macchiato"
+
+lua << EOF
+
+require("catppuccin").setup({
+	transparent_background = true,
+	styles = {
+		comments = { "italic" },
+		conditionals = { "bold" },
+		loops = {},
+		functions = { "bold" },
+		keywords = {},
+		strings = {},
+		variables = {},
+		numbers = {},
+		booleans = { "bold" },
+		properties = {},
+		types = {},
+		operators = { "bold" },
+	}
+})
+
+EOF
+
 colorscheme gruvbox
-let g:gruvbox_contrast='soft'
 
-let g:airline_theme='gruvbox'
+" Clear background
+hi Normal ctermbg=NONE guibg=NONE
 
-" Kill background color
-hi Normal guibg=NONE ctermbg=NONE
+" Airline
+let g:airline_theme='onedark'
 
-" More on vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols = 'fancy'
@@ -100,9 +127,11 @@ source ~/.keybinds.vim
 :imap <C-q> <ESC> :Vista!! <CR>
 :map <C-q> :Vista!! <CR>
 
+" PDF viewer
+let g:livepreview_previewer = 'zathura'
+
 " Terminal go back to normal mode
 tnoremap <Esc> <C-\><C-n>
-tnoremap <F2> <C-\><C-n>:q!<CR>
 
 set foldmethod=indent
 set foldlevel=20
@@ -114,9 +143,9 @@ au BufRead,BufNewFile *.vert set filetype=glsl
 au BufRead,BufNewFile *.frag set filetype=glsl
 
 " Todotree plugin
-source ~/.config/nvim/todotree.vim
-:imap <C-e> <ESC> :call TodoTree() <CR>
-:map <C-e> :call TodoTree() <CR>
+" source ~/.config/nvim/todotree.vim
+" :imap <C-e> <ESC> :call TodoTree() <CR>
+" :map <C-e> :call TodoTree() <CR>
 
 " Terminal
 lua << EOF

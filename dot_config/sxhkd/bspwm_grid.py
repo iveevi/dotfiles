@@ -29,4 +29,3 @@ desktop_index = grid_y * grid_size + grid_x
 new = all[desktop_index]
 
 os.system('bspc desktop -f ' + new)
-os.system(f'notify-send -t 500 "Desktop {new}"')

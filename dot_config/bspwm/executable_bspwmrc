@@ -4,22 +4,34 @@
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 # Detect and setup monitors
+bspc monitor eDP-1-1 -d 1 2 3 4
+bspc monitor eDP-1 -d 1 2 3 4
+
 if [[ $(xrandr -q | grep 'HDMI.* connected') ]]; then
+	# HDMI connected
 	xrandr --output eDP-1-1 --primary --mode 2560x1440 --rotate normal \
 		--output HDMI-0 --mode 1920x1200 --rotate normal --right-of eDP-1-1
+
+	# BSPWM settings
+	bspc monitor eDP-1-1 -d 1 2 3 4
+	bspc monitor HDMI-0 -d 5 6 7 8
+elif [[ $(xrandr -q | grep 'DP.* connected') ]]; then
+	# DP connected
+	xrandr --output eDP-1-1 --primary --mode 2560x1440 --rotate normal \
+		--output DP-1-1 --mode 3440x1440 --rotate normal --right-of eDP-1-1
+
+	# BSPWM settings
+	bspc monitor eDP-1-1 -d 1 2 3 4
+	bspc monitor DP-1-1 -d 5 6 7 8
 fi
 
-# BSPWM settings
-bspc monitor eDP-1-1 -d 1 2 3 4
-bspc monitor HDMI-0 -d 5 6 7 8
-
-bspc config border_radius	3
+bspc config border_radius	10
 bspc config border_width       	2
 bspc config window_gap          5
 
 bspc config borderless_monocle  true
 bspc config gapless_monocle     true
-bspc config split_ratio         0.52
+bspc config split_ratio         0.5
 
 bspc config active_border_color '#8ba5ad'
 bspc config normal_border_color '#8ba5ad'
@@ -30,20 +42,27 @@ bspc rule -a discord state=floating
 bspc rule -a lutris state=floating
 
 # Background
-feh --bg-scale ~/sources/polybar-themes/wallpapers/bg_17.jpg
+feh --bg-scale ~/pictures/reflections.jpg
 
 # Compositor
-picom --config ~/.config/picom/picom.conf -b
+picom --experimental-backends --xrender-sync-fence --backend glx -b
 
-# Bar
-polybar main &
+# Bars
+for m in $(echo $(xrandr --query | grep " connected" | grep "eDP" | cut -d" " -f1)); do
+	MONITOR=$m polybar -r main-left &
+	MONITOR=$m polybar -r main-right &
+done
 
 if [[ $(xrandr -q | grep 'HDMI.* connected') ]]; then
-	polybar external-hdmi-0 &
+	polybar -r external-left &
+	polybar -r external-right &
 fi
 
 # Other services
+alsactl init &
 dunst &
 eww daemon &
-systemctl start mpd
-betterlockscreen -u "/home/venki/pictures/trees.jpg" &
+mpd &
+nm-applet &
+betterlockscreen -u ~/pictures/reflections.jpg &
+libinput-gestures-setup stop desktop autostart start &

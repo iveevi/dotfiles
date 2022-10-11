@@ -23,10 +23,10 @@ F5
 
 # Brightness
 F11
-	xbacklight -dec 10
+	xbacklight -dec 5
 
 F12
-	xbacklight -inc 10
+	xbacklight -inc 5
 
 # Tiling and floating windows
 super + f
@@ -77,6 +77,9 @@ super + Return
 
 super + c
 	google-chrome-stable
+
+super + e
+	thunar
 
 # Rofi
 alt + @space
