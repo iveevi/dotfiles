@@ -37,12 +37,8 @@ bspc config active_border_color '#8ba5ad'
 bspc config normal_border_color '#8ba5ad'
 bspc config focused_border_color '#8ee6a4'
 
-# App specific rules
-bspc rule -a discord state=floating
-bspc rule -a lutris state=floating
-
 # Background
-feh --bg-scale ~/pictures/reflections.jpg
+feh --bg-scale ~/pictures/hercules.jpg
 
 # Compositor
 picom --experimental-backends --xrender-sync-fence --backend glx -b
@@ -51,12 +47,8 @@ picom --experimental-backends --xrender-sync-fence --backend glx -b
 for m in $(echo $(xrandr --query | grep " connected" | grep "eDP" | cut -d" " -f1)); do
 	MONITOR=$m polybar -r main-left &
 	MONITOR=$m polybar -r main-right &
+	MONITOR=$m polybar -r main-center &
 done
-
-if [[ $(xrandr -q | grep 'HDMI.* connected') ]]; then
-	polybar -r external-left &
-	polybar -r external-right &
-fi
 
 # Other services
 alsactl init &
@@ -64,5 +56,5 @@ dunst &
 eww daemon &
 mpd &
 nm-applet &
-betterlockscreen -u ~/pictures/reflections.jpg &
+betterlockscreen -u ~/pictures/hercules.jpg &
 libinput-gestures-setup stop desktop autostart start &

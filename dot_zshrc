@@ -1,4 +1,11 @@
-# If you come from bash you might have to change your $PATH.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
@@ -112,7 +119,19 @@ export PATH="$HOME/.local/bin:$PATH"
 eval "$(starship init zsh)"
 
 # Starship theme
-export STARSHIP_CONFIG=~/downloads/pastel-powerline.toml
+# export STARSHIP_CONFIG=~/downloads/pastel-powerline.toml
 
-# Startup please
-please
+# zsh theme
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Startup
+neofetch
+
+# >>> xmake >>>
+[[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
+# <<< xmake <<<
+
+export PATH=$PATH:/home/venki/.spicetify
+export PATH=$PATH:/opt/nvidia/hpc_sdk/Linux_x86_64/22.7/compilers/bin
+# export PATH=$PATH:/home/venki/research/restir-dr/build
+# export PYTHONPATH=/home/venki/research/restir-dr/build/python:$PYTHONPATH
