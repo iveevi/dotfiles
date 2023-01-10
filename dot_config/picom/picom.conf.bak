@@ -1,0 +1,23 @@
+# Animations
+animations = true
+
+# Shadows
+shadows = true
+
+# Fading
+fading = true
+fade-in-step = 0.05
+fade-out-step = 0.05
+
+# Transparency
+inactive-opactity = 0.7
+active-opacity = 1.0
+
+corner-radius = 5
+
+# Blur
+blur:
+{
+	method = "dual_kawase";
+	strength = 10;
+}
