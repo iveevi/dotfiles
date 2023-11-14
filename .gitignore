@@ -1,2 +1,3 @@
 dot_config/nvim/autoload
 dot_config/nvim/plugged
+dot_config/nvim/plugin

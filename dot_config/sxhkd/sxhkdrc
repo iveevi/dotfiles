@@ -49,7 +49,7 @@ ctrl + shift + {Left, Right, Up, Down}
 	bspc node -z {left -20 0, left 20 0, top 0 -20, top 0 20}
 
 # With mouse
-super + shift + m
+super + shift + w
 	python ~/.config/sxhkd/bspwm_mouse.py move
 
 super + shift + r

@@ -13,7 +13,7 @@ require('packer').startup(function(use)
 	use 'nvim-lua/plenary.nvim'
 	use 'nvim-telescope/telescope.nvim'
 	use 'akinsho/bufferline.nvim'
-	use 'EthanJWright/vs-tasks.nvim'
+	use 'akinsho/toggleterm.nvim'
 	use 'skywind3000/asyncrun.vim'
 	use 'windwp/nvim-autopairs'
 	use 'echasnovski/mini.nvim'
@@ -22,6 +22,7 @@ require('packer').startup(function(use)
 	use 'folke/todo-comments.nvim'
 	use 'matbme/JABS.nvim'
 	use 'rktjmp/lush.nvim'
+	use 'stevearc/overseer.nvim'
 
 	-- LSP and completion
 	use 'neovim/nvim-lspconfig'
@@ -157,6 +158,13 @@ vim.g.two_firewatch_italics = 1
 vim.cmd('colorscheme catppuccin-frappe')
 vim.g.airline_theme = 'catppuccin'
 
+-- Terminals
+require('toggleterm').setup({
+	size = 80,
+	direction = 'vertical',
+	shade_terminals = false,
+})
+
 -- Bufferline and airline
 require('bufferline').setup()
 
@@ -212,10 +220,15 @@ vim.g.livepreview_engine = 'xelatex'
 
 -- Other modules
 require('nvim-autopairs').setup()
+require('overseer').setup()
 
 -- Additional keybindings
 vim.keymap.set({ 'n', 'i' },
 	'<C-s>', ':w<CR>',
+	{ noremap = true, silent = true })
+
+vim.keymap.set({ 'n', 'i' },
+	'<A-t>', ':ToggleTerm<CR>',
 	{ noremap = true, silent = true })
 
 vim.keymap.set({ 'n' },
@@ -230,10 +243,6 @@ vim.keymap.set({ 'n', 'v' },
 	'<C-g>', ':Telescope git_files<CR>',
 	{ noremap = true, silent = true })
 
-vim.keymap.set({ 'n', 'i', 'v' },
-	'<F7>', ':lua require("telescope").extensions.vstask.tasks()<CR>',
-	{ noremap = true, silent = true })
-
 vim.keymap.set({ 'n' },
 	'tl', ':TroubleToggle<CR>',
 	{ noremap = true, silent = true })
@@ -245,3 +254,6 @@ vim.keymap.set({ 'n' },
 vim.keymap.set({ 'n' },
 	'bf', ':JABSOpen<CR>',
 	{ noremap = true, silent = true })
+
+-- Transparent file explorer
+vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]

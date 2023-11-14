@@ -9,8 +9,8 @@ previous_monitor=""
 primary=0
 
 for monitor in $monitors; do
-	# resolution=$(xrandr --query | grep $monitor -A 1 | tail -n 1 | cut -d " " -f 4)
-	resolution="2560x1440"
+	resolution=$(xrandr --query | grep $monitor -A 1 | tail -n 1 | cut -d " " -f 4)
+	# resolution="2560x1440"
 	echo "Monitor: " $monitor ", resolution: " $resolution
 
 	# Append to the xrandr command

@@ -45,6 +45,7 @@ def on_move(x, y):
     if cmd == 1:
         subprocess.call(['bspc', 'node', '-v', str(dx), str(dy)])
     elif cmd == 2:
+        print('dx: {}, dy: {}'.format(dx, dy))
         subprocess.call(['bspc', 'node', '-z', 'bottom_right', str(dx), str(dy)])
 
 def on_click(x, y, button, pressed):
@@ -52,7 +53,5 @@ def on_click(x, y, button, pressed):
         return False
 
 # Collect events until released
-with mouse.Listener(
-        on_move=on_move,
-        on_click=on_click) as listener:
+with mouse.Listener(on_move=on_move, on_click=on_click) as listener:
     listener.join()
