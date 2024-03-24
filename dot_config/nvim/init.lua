@@ -1,28 +1,26 @@
 -- Load plugins
 require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
-	use 'nvim-tree/nvim-tree.lua'
-	use 'nvim-tree/nvim-web-devicons'
-	use 'zbirenbaum/copilot.lua'
-	use 'numToStr/Comment.nvim'
-	use 'vim-airline/vim-airline'
-	use 'vim-airline/vim-airline-themes'
-	use 'nvim-treesitter/nvim-treesitter'
-	use 'folke/which-key.nvim'
-	use 'nvim-lua/popup.nvim'
-	use 'nvim-lua/plenary.nvim'
-	use 'nvim-telescope/telescope.nvim'
 	use 'akinsho/bufferline.nvim'
 	use 'akinsho/toggleterm.nvim'
-	use 'skywind3000/asyncrun.vim'
-	use 'windwp/nvim-autopairs'
 	use 'echasnovski/mini.nvim'
-	use 'xuhdev/vim-latex-live-preview'
-	use 'folke/trouble.nvim'
 	use 'folke/todo-comments.nvim'
+	use 'folke/trouble.nvim'
+	use 'folke/which-key.nvim'
 	use 'matbme/JABS.nvim'
+	use 'numToStr/Comment.nvim'
+	use 'nvim-lua/plenary.nvim'
+	use 'nvim-lua/popup.nvim'
+	use 'nvim-telescope/telescope.nvim'
+	use 'nvim-tree/nvim-tree.lua'
+	use 'nvim-tree/nvim-web-devicons'
+	use 'nvim-treesitter/nvim-treesitter'
 	use 'rktjmp/lush.nvim'
+	use 'skywind3000/asyncrun.vim'
 	use 'stevearc/overseer.nvim'
+	use 'wbthomason/packer.nvim'
+	use 'windwp/nvim-autopairs'
+	use 'xiyaowong/transparent.nvim'
+	use 'xuhdev/vim-latex-live-preview'
 
 	-- LSP and completion
 	use 'neovim/nvim-lspconfig'
@@ -40,12 +38,28 @@ require('packer').startup(function(use)
 	use 'rakr/vim-two-firewatch'
 	use 'atelierbram/Base2Tone-vim'
 	use 'mcchrish/zenbones.nvim'
+	use 'sainnhe/everforest'
 	use { 'catppuccin/nvim', as = 'catppuccin' }
 	use({ 'rose-pine/neovim', as = 'rose-pine' })
 end)
 
 -- Leader key
 vim.g.mapleader = '`'
+
+-- Colorscheme
+vim.cmd [[ colorscheme rose-pine ]]
+
+require('rose-pine').setup({
+	variant = 'dawn'
+})
+
+-- Transparency
+-- require("transparent").setup({
+-- 	extra_groups = {
+-- 		'NvimTreeNormal',
+-- 		'NvimTreeEndOfBuffer',
+-- 	},
+-- })
 
 -- Configure telescope
 require('telescope').setup()
@@ -89,8 +103,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     bufmap('n', 'gca', '<cmd>lua vim.lsp.buf.code_action()<cr>')
     bufmap('x', 'grca', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
     bufmap('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
-    -- bufmap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
-    -- bufmap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
   end
 })
 
@@ -148,16 +160,6 @@ vim.o.timeout = true
 vim.o.timeoutlen = 300
 require('which-key').setup({})
 
--- Configure colorscheme
-vim.api.nvim_set_option('background', 'dark')
-vim.g.two_firewatch_italics = 1
-
--- vim.cmd('colorscheme Base2Tone_ForestDark')
--- vim.g.airline_theme = 'Base2Tone_ForestDark'
-
-vim.cmd('colorscheme catppuccin-frappe')
-vim.g.airline_theme = 'catppuccin'
-
 -- Terminals
 require('toggleterm').setup({
 	size = 80,
@@ -170,18 +172,6 @@ require('bufferline').setup()
 
 -- Always italicize comments
 vim.cmd('highlight Comment cterm=italic gui=italic')
--- vim.api.nvim_set_hl(0, 'Comment', { italic = true,  })
-
--- Configure Copilot
-require('copilot').setup({
-	suggestion = {
-		enabled = true,
-		auto_trigger = true,
-		keymap = {
-			accept = '<C-d>',
-		}
-	}
-})
 
 -- Configure comment
 require('Comment').setup({
@@ -256,4 +246,4 @@ vim.keymap.set({ 'n' },
 	{ noremap = true, silent = true })
 
 -- Transparent file explorer
-vim.cmd[[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
+vim.cmd [[ hi NvimTreeNormal guibg=NONE ctermbg=NONE ]]
