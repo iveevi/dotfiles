@@ -1,0 +1,86 @@
+{
+	"$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+	"blocks": [
+		{
+			"newline": true,
+			"alignment": "right",
+			"segments": [
+				{
+					"type": "executiontime",
+					"background": "#8ec4e8",
+					"foreground": "#ffffff",
+					"style": "diamond",
+					"leading_diamond": " \ue0b6",
+					"trailing_diamond": "\ue0b4",
+					"template": " \ueba2 {{ .FormattedMs }} ",
+					"properties": {
+						"always_enabled": true
+					}
+				}
+			],
+			"type": "rprompt"
+		},
+
+		{
+			"alignment": "left",
+			"segments": [
+				{
+					"type": "session",
+					"background": "#61AFEF",
+					"foreground": "#ffffff",
+					"style": "diamond",
+					"leading_diamond": "\ue0b6",
+					"trailing_diamond": "\ue0b4",
+					"template": " {{ .UserName }}@{{ .HostName }} "
+				},
+
+				{
+					"type": "path",
+					"background": "#C678DD",
+					"foreground": "#ffffff",
+					"style": "diamond",
+					"leading_diamond": " \ue0b6",
+					"trailing_diamond": "\ue0b4",
+					"template": " {{ .Path }} ",
+					"properties": {
+						"style": "folder"
+					}
+				},
+
+				{
+					"type": "git",
+					"style": "diamond",
+					"leading_diamond": " \ue0b6",
+					"trailing_diamond": "\ue0b4",
+					"background": "#95ffa4",
+					"foreground": "#193549",
+					"template": " {{ .HEAD }} "
+				},
+
+				{
+					"background": "#FF6471",
+					"foreground": "#ffffff",
+					"style": "diamond",
+					"leading_diamond": " \ue0b6",
+					"trailing_diamond": "\ue0b4",
+					"template": " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }} ",
+					"type": "python"
+				},
+
+				{
+					"type": "cmake",
+					"style": "powerline",
+					"foreground": "#e8eaee",
+					"background": "#5149de",
+					"style": "diamond",
+					"leading_diamond": " \ue0b6",
+					"trailing_diamond": "\ue0b4",
+					"template": "  cmake {{ .Full }} "
+				}
+			],
+			"type": "prompt"
+		}
+	],
+	"final_space": true,
+	"version": 2
+}
