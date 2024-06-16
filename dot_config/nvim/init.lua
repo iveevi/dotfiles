@@ -19,8 +19,8 @@ require('packer').startup(function(use)
 	use 'stevearc/overseer.nvim'
 	use 'wbthomason/packer.nvim'
 	use 'windwp/nvim-autopairs'
-	use 'xiyaowong/transparent.nvim'
 	use 'xuhdev/vim-latex-live-preview'
+	use { 'nvim-telescope/telescope-file-browser.nvim', requires = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' } }
 
 	-- LSP and completion
 	use 'neovim/nvim-lspconfig'
@@ -33,12 +33,14 @@ require('packer').startup(function(use)
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip'
 	use 'rafamadriz/friendly-snippets'
+	use 'liuchengxu/vista.vim'
 
 	-- Colorscheme repositories
 	use 'rakr/vim-two-firewatch'
 	use 'atelierbram/Base2Tone-vim'
 	use 'mcchrish/zenbones.nvim'
 	use 'sainnhe/everforest'
+	use 'shaunsingh/nord.nvim'
 	use { 'catppuccin/nvim', as = 'catppuccin' }
 	use({ 'rose-pine/neovim', as = 'rose-pine' })
 end)
@@ -47,19 +49,7 @@ end)
 vim.g.mapleader = '`'
 
 -- Colorscheme
-vim.cmd [[ colorscheme rose-pine ]]
-
-require('rose-pine').setup({
-	variant = 'dawn'
-})
-
--- Transparency
--- require("transparent").setup({
--- 	extra_groups = {
--- 		'NvimTreeNormal',
--- 		'NvimTreeEndOfBuffer',
--- 	},
--- })
+vim.cmd [[ colorscheme nord ]]
 
 -- Configure telescope
 require('telescope').setup()
@@ -162,16 +152,15 @@ require('which-key').setup({})
 
 -- Terminals
 require('toggleterm').setup({
-	size = 80,
-	direction = 'vertical',
-	shade_terminals = false,
+	size = 20,
+	direction = 'horizontal'
 })
 
 -- Bufferline and airline
 require('bufferline').setup()
 
--- Always italicize comments
-vim.cmd('highlight Comment cterm=italic gui=italic')
+-- -- Always italicize comments
+-- vim.cmd('highlight Comment cterm=italic gui=italic')
 
 -- Configure comment
 require('Comment').setup({
@@ -217,8 +206,12 @@ vim.keymap.set({ 'n', 'i' },
 	'<C-s>', ':w<CR>',
 	{ noremap = true, silent = true })
 
-vim.keymap.set({ 'n', 'i' },
-	'<A-t>', ':ToggleTerm<CR>',
+vim.keymap.set({ 't' },
+	'<ESC>', '<C-\\><C-n>',
+	{ noremap = true, silent = true })
+
+vim.keymap.set({ 'n', 't' },
+	'<A-t>', '<ESC>:ToggleTerm<CR>',
 	{ noremap = true, silent = true })
 
 vim.keymap.set({ 'n' },
@@ -244,6 +237,3 @@ vim.keymap.set({ 'n' },
 vim.keymap.set({ 'n' },
 	'bf', ':JABSOpen<CR>',
 	{ noremap = true, silent = true })
-
--- Transparent file explorer
-vim.cmd [[ hi NvimTreeNormal guibg=NONE ctermbg=NONE ]]
