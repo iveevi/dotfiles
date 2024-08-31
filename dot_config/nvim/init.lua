@@ -49,7 +49,7 @@ end)
 vim.g.mapleader = '`'
 
 -- Colorscheme
-vim.cmd [[ colorscheme nord ]]
+vim.cmd [[ colorscheme catppuccin-latte ]]
 
 -- Configure telescope
 require('telescope').setup()
@@ -60,7 +60,7 @@ require('nvim-web-devicons').setup({})
 
 -- Treesitter
 require('nvim-treesitter.configs').setup({
-	ensure_installed = { 'c', 'cpp', 'python', 'cuda', 'lua', 'bash', 'latex' },
+	ensure_installed = { 'c', 'cpp', 'python', 'cuda', 'lua', 'bash', 'latex', 'rust' },
 	highlight = {
 		enable = true,
 	},
@@ -68,7 +68,7 @@ require('nvim-treesitter.configs').setup({
 
 -- Configure LSP
 local lspconfig = require('lspconfig')
-local servers = { 'clangd', 'pyright', 'texlab' }
+local servers = { 'clangd', 'pyright', 'texlab', 'rust_analyzer' }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({})
 end
@@ -184,7 +184,8 @@ require('mini.trailspace').setup()
 
 -- Buffer switching
 require('jabs').setup({
-	border = 'single',
+	sort_mru = true,
+	border = 'rounded',
 	offset = {
 		top = 2,
 		bottom = 2,
@@ -196,6 +197,20 @@ require('jabs').setup({
 -- Configure LaTeX preview
 vim.g.livepreview_previewer = 'zathura'
 vim.g.livepreview_engine = 'xelatex'
+
+-- Auto formatting
+-- vim.api.nvim_create_augroup("AutoFormat", {})
+--
+-- vim.api.nvim_create_autocmd(
+--     "BufWritePre",
+--     {
+--         pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
+--         group = "AutoFormat",
+--         callback = function()
+--             vim.cmd("silent %!clang-format")
+--         end,
+--     }
+-- )
 
 -- Other modules
 require('nvim-autopairs').setup()
@@ -211,7 +226,7 @@ vim.keymap.set({ 't' },
 	{ noremap = true, silent = true })
 
 vim.keymap.set({ 'n', 't' },
-	'<A-t>', '<ESC>:ToggleTerm<CR>',
+	'<A-t>', '<C-\\><C-n>:ToggleTerm<CR>',
 	{ noremap = true, silent = true })
 
 vim.keymap.set({ 'n' },
@@ -231,9 +246,18 @@ vim.keymap.set({ 'n' },
 	{ noremap = true, silent = true })
 
 vim.keymap.set({ 'n' },
-	'tt', ':TodoQuickFix<CR>',
+	'tt', ':Trouble todo<CR>',
 	{ noremap = true, silent = true })
 
 vim.keymap.set({ 'n' },
-	'bf', ':JABSOpen<CR>',
+	'<C-j>', ':JABSOpen<CR>',
 	{ noremap = true, silent = true })
+
+vim.filetype.add({
+	extension = {
+		frag = 'glsl',
+		vert = 'glsl',
+		task = 'glsl',
+		mesh = 'glsl',
+	}
+})
